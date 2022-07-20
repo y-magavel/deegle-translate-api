@@ -4,5 +4,5 @@
 # JetBrains製IDEの設定ディレクトリ
 /.idea
 
-#vscodeの設定
+# VSCodeの設定ディレクトリ
 .vscode/
