@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+  deegle-app:
+    depends_on:
+      - deegle-db
+    build: ./golang
+    networks:
+      - deegle-network
+    ports:
+      - "8080:8080"
+    volumes:
+      - ../src:/go/src/app
+    restart: always
+
+  deegle-db:
+    build: ./mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - deegle-volume:/var/lib/mysql
+    env_file:
+      - ./.env
+    environment:
+      - MYSQL_DATABASE
+      - MYSQL_USER
+      - MYSQL_PASSWORD
+      - MYSQL_ROOT_PASSWORD
+    restart: always
+
+networks:
+  deegle-network:
+
+volumes:
+  deegle-volume:
