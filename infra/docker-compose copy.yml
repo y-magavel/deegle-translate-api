@@ -1,0 +1,51 @@
+version: "3"
+
+services:
+  #BACK
+  deegle-app:
+    depends_on:
+      - deegle-db
+    build: ./deegle-translate-api/infra/golang
+    networks:
+      - deegle-network
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./deegle-translate-api/src:/go/src/app
+    restart: always
+  #FRONT
+  deegle-view:
+    depends_on:
+      - deegle-app
+    build: ./deegle-translate-view
+    networks:
+      - deegle-network
+    command: sh -c "npm install && npm run dev"
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./deegle-translate-view:/next/src/app
+    restart: always
+
+  #DB
+  deegle-db:
+    build: ./deegle-translate-api/infra/mysql
+    networks:
+      - deegle-network
+    ports:
+      - "3306:3306"
+    volumes:
+      - deegle-volume:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER:  ${DB_USER}
+      MYSQL_PASSWORD:  ${DB_PASS}
+      MYSQL_ROOT_PASSWORD:  ${ROOT_PASS}
+      MYSQL_ROOT_HOST: '%'
+    restart: always
+
+networks:
+  deegle-network:
+
+volumes:
+  deegle-volume:
