@@ -1,19 +1,18 @@
 package handler
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/tmsic/deegle-translate-api/db"
+	"github.com/tmsic/deegle-translate-api/db/dbrepo"
 )
 
-func AllGoods() gin.HandlerFunc {
+// 全てのいいね数を取得
+func AllLikes() gin.HandlerFunc {
 	return func(c *gin.Context) {
-
-		result := db.DBConnect()
-		fmt.Println(result)
-
+		//実際の処理
+		result := dbrepo.AllLikes()
+		//json形式で画面に値返却
 		c.JSON(http.StatusOK, gin.H{
 			"likeCount": result,
 		})
