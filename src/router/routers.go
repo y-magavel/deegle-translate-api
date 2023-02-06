@@ -10,6 +10,7 @@ func GetRouter() *gin.Engine {
 	r := gin.Default()
 	middleware.CORS(r)
 
-	r.GET("/test", handler.AllGoods())
+	r.GET("/test", handler.AllLikes())
+
 	return r
 }
