@@ -11,6 +11,9 @@ func GetRouter() *gin.Engine {
 	middleware.CORS(r)
 
 	r.GET("/test", handler.AllLikes())
+	//Google翻訳・DeepL APIハンドラ
+	r.GET("/google_translate", handler.GoogleTranslate())
+	r.GET("/deepL_translate", handler.DeepLTranslate())
 
 	return r
 }
